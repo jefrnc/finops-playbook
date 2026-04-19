@@ -19,6 +19,8 @@ access to.
 | `finops-waste-hunter.sh` | Finds common waste: orphan managed disks, unattached NICs, unused public IPs, old snapshots, empty App Service Plans. |
 | `finops-tag-compliance.sh` | Scores coverage for each mandatory tag, lists the top resource groups / types missing tags, and produces a backfill CSV. |
 | `finops-cost-by-tag.sh` | Queries Cost Management grouped by a tag dimension (e.g. `env`, `app`) and renders a breakdown with ASCII bar charts. |
+| `finops-cost-breakdown-by-meter.sh` | Decomposes a single resource's (or RG's) cost down to `MeterCategory/MeterSubCategory/Meter`. Reveals embedded licenses, cross-region bandwidth and other "hidden" charges that don't match the expected metric. |
+| `finops-idle-scan.sh` | Cross-references the top N spenders against Azure Monitor CPU/memory metrics. Produces per-resource flags: `IDLE` / `LOW` / `OK` / `PEAK` / `SATURATED` / `UNKNOWN`. |
 | `finops-monthly-report.sh` | Orchestrator: runs all of the above and consolidates a single executive monthly report with subscription-level KPIs. |
 
 ## Requirements
@@ -101,4 +103,22 @@ The directory is gitignored except for a `.gitkeep`.
 - **Monthly (1st of month):** `finops-monthly-report.sh` — executive summary
   for the FinOps review.
 - **Ad-hoc:** `finops-waste-hunter.sh` before any cleanup campaign,
-  `finops-cost-by-tag.sh` when someone asks "where is the money going?".
+  `finops-cost-by-tag.sh` when someone asks "where is the money going?",
+  `finops-idle-scan.sh` when "where do we cut?" needs a metrics-grounded answer,
+  `finops-cost-breakdown-by-meter.sh` when a single resource shows a cost that
+  doesn't match what it should cost (the "it says bandwidth but we barely moved
+  data" moment).
+
+## Investigation workflow
+
+When the monthly report surfaces something surprising:
+
+1. `finops-idle-scan.sh --top 30` → identify top spenders that are underused
+   (IDLE/LOW) or over-stretched (SATURATED).
+2. For anything in the output whose cost doesn't obviously match its role,
+   run `finops-cost-breakdown-by-meter.sh --resource-id <id>` — the meter-level
+   view frequently reveals an embedded SQL/Windows license, cross-region
+   egress, or a backup tier you didn't know was on.
+3. Only after those two steps, decide between rightsize / stop / delete /
+   schedule. Never downsize production based on CPU average alone — pair it
+   with the app owner's input.
