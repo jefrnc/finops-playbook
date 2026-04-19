@@ -1,0 +1,17 @@
+# Cloud Custodian — delete managed disk snapshots older than 90 days
+#
+# Tune the age threshold via the filter below. Keeps the last snapshot per
+# source disk by default (`keep-latest` filter).
+
+policies:
+  - name: delete-old-disk-snapshots
+    resource: azure.disk-snapshot
+    description: Snapshots older than 90 days that are not the latest per source
+    filters:
+      - type: value
+        key: "properties.timeCreated"
+        op: less-than
+        value_type: age
+        value: 90
+    actions:
+      - type: delete

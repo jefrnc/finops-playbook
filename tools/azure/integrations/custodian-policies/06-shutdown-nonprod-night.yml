@@ -1,0 +1,19 @@
+# Cloud Custodian — enforce auto-shutdown at 8 PM for non-prod VMs
+#
+# Complements the native DevTestLabs auto-shutdown feature. Runs as a
+# scheduled job (cron / Logic App / Azure Function).
+
+policies:
+  - name: shutdown-nonprod-vms-at-night
+    resource: azure.vm
+    description: Stop non-prod VMs that are still running after business hours
+    filters:
+      - "tag:env":
+          op: in
+          value: ["dev", "qa", "test", "staging", "uat"]
+      - type: value
+        key: "properties.instanceView.statuses[*].code"
+        op: contains
+        value: "PowerState/running"
+    actions:
+      - type: stop

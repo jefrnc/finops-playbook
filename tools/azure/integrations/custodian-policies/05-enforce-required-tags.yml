@@ -1,0 +1,20 @@
+# Cloud Custodian — enforce mandatory tag set on every resource
+#
+# Tags the resource with a tracking marker; reporting only. Pair this policy
+# with the Azure Policy initiative for enforcement at deploy time.
+
+policies:
+  - name: report-missing-mandatory-tags
+    resource: azure.resourcegroup
+    description: Resource groups missing any of the mandatory tags
+    filters:
+      - or:
+          - "tag:env": absent
+          - "tag:app": absent
+          - "tag:cost_center": absent
+          - "tag:owner": absent
+          - "tag:criticality": absent
+    actions:
+      - type: tag
+        tag: finops:tags-missing
+        value: "{now}"
