@@ -132,19 +132,19 @@ Tagging Strategy:
 
 ### Bundled toolkit — [`tools/`](./tools)
 
-A set of bash utilities that turn the Azure CLI + Cost Management API +
-Resource Graph into weekly/monthly FinOps reports. All read-only, no SaaS
-required.
+Runnable utilities that complement the playbook, organized by cloud provider.
+Each folder is self-contained (own `lib/`, `config/`, `output/`, README) so
+you can adopt one without pulling in the others.
 
-| Script | Purpose |
-|---|---|
-| `finops-drift-weekly.sh` | Inventory drift vs. baseline |
-| `finops-waste-hunter.sh` | Orphan disks, NICs, public IPs, old snapshots, empty ASPs |
-| `finops-tag-compliance.sh` | Tag coverage scoring + backfill plan |
-| `finops-cost-by-tag.sh` | Cost Management breakdown grouped by tag |
-| `finops-monthly-report.sh` | Orchestrator — consolidated monthly report |
+| Provider | Folder | What's inside |
+|---|---|---|
+| Azure | [`tools/azure/`](./tools/azure) | 5 bash scripts: inventory drift, waste hunter, tag compliance, cost-by-tag, monthly orchestrator |
+| AWS | `tools/aws/` | _(not yet — contributions welcome)_ |
+| GCP | `tools/gcp/` | _(not yet — contributions welcome)_ |
 
-See [`tools/README.md`](./tools/README.md) for usage.
+All scripts are read-only by design: they query the cloud and write CSV +
+Markdown locally. No mutations, no SaaS, no vendor lock-in. See
+[`tools/README.md`](./tools/README.md) for the contributing guide.
 
 ### Cloud Provider Tools
 - **AWS**: Cost Explorer, Trusted Advisor, Compute Optimizer

@@ -8,7 +8,7 @@
 #   - markdown executive summary with coverage by tag, by resource type, by RG
 #
 # Usage:
-#   FINOPS_PROFILE=ecipsa ./finops-tag-compliance.sh
+#   FINOPS_PROFILE=acme ./finops-tag-compliance.sh
 #   FINOPS_REQUIRED_TAGS="env app owner" AZ_SUBSCRIPTION=<id> ./finops-tag-compliance.sh
 
 set -e

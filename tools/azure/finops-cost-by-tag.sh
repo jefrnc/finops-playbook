@@ -5,8 +5,8 @@
 # Produces CSV + markdown with ASCII bar charts.
 #
 # Usage:
-#   FINOPS_PROFILE=ecipsa ./finops-cost-by-tag.sh env
-#   FINOPS_PROFILE=ecipsa FINOPS_COST_DAYS=60 ./finops-cost-by-tag.sh app
+#   FINOPS_PROFILE=acme ./finops-cost-by-tag.sh env
+#   FINOPS_PROFILE=acme FINOPS_COST_DAYS=60 ./finops-cost-by-tag.sh app
 #   AZ_SUBSCRIPTION=<id> ./finops-cost-by-tag.sh env 30
 
 set -e

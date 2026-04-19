@@ -5,7 +5,7 @@
 # then consolidates the results into a single executive monthly report.
 #
 # Usage:
-#   FINOPS_PROFILE=ecipsa ./finops-monthly-report.sh
+#   FINOPS_PROFILE=acme ./finops-monthly-report.sh
 #   AZ_SUBSCRIPTION=<id> FINOPS_REQUIRED_TAGS="env app" ./finops-monthly-report.sh
 
 set -e

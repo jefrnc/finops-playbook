@@ -10,7 +10,7 @@
 # Produces a markdown report and the new baseline snapshot.
 #
 # Usage:
-#   FINOPS_PROFILE=ecipsa ./finops-drift-weekly.sh
+#   FINOPS_PROFILE=acme ./finops-drift-weekly.sh
 #   # or
 #   AZ_SUBSCRIPTION=<sub-id> FINOPS_REQUIRED_TAGS="env app" FINOPS_KNOWN_RGS="rg-a rg-b" ./finops-drift-weekly.sh
 
@@ -133,7 +133,7 @@ fi
   echo "1. Review new resources above — confirm they are expected (tagged, sized, approved)."
   echo "2. Validate removed resources are intentional (check changelog)."
   echo "3. For missing-tags hotspots, run \`finops-tag-compliance.sh\` for full backfill plan."
-  echo "4. If the Ecipsa tagging policy initiative is deployed, trigger remediation tasks in Azure Portal."
+  echo "4. If a tagging policy initiative is deployed, trigger remediation tasks in Azure Portal."
 } > "$REPORT"
 
 # promote snapshot to new baseline

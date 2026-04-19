@@ -12,7 +12,7 @@
 # Output: CSV per category + consolidated markdown summary.
 #
 # Usage:
-#   FINOPS_PROFILE=ecipsa ./finops-waste-hunter.sh
+#   FINOPS_PROFILE=acme ./finops-waste-hunter.sh
 #   FINOPS_SNAPSHOT_AGE_DAYS=60 ./finops-waste-hunter.sh
 
 set -e
