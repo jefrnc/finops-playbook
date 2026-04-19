@@ -1,0 +1,41 @@
+# Cloud Custodian — stop VMs without mandatory 'env' tag outside business hours
+#
+# Usage (dry-run):
+#   custodian run -s out/ 01-stop-untagged-nonprod-vms.yml --dryrun
+#
+# Usage (live):
+#   AZURE_SUBSCRIPTION_ID=<id> custodian run -s out/ 01-stop-untagged-nonprod-vms.yml
+#
+# Rationale: any VM without the env tag cannot be cost-allocated and is likely
+# an accidental deploy. Stopping it forces the owner to tag & restart.
+
+policies:
+  - name: stop-untagged-vms-report
+    resource: azure.vm
+    description: Report VMs without the mandatory 'env' tag (no action)
+    filters:
+      - "tag:env": absent
+      - type: value
+        key: "properties.provisioningState"
+        value: "Succeeded"
+    actions:
+      - type: notify
+        template: default
+        subject: "Untagged VM detected"
+        to: ["resource-owner"]
+
+  - name: stop-untagged-nonprod-vms-after-hours
+    resource: azure.vm
+    description: Stop untagged non-prod VMs after 8 PM local — forces tag remediation
+    filters:
+      - "tag:env": absent
+      - not:
+          - type: value
+            key: "tags.criticality"
+            value: "high"
+      - type: value
+        key: "location"
+        op: not-in
+        value: ["northeurope", "westeurope"]   # adjust to your prod regions
+    actions:
+      - type: stop

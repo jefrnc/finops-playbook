@@ -1,0 +1,20 @@
+# Cloud Custodian — flag Premium SSD disks on non-prod VMs
+#
+# Premium_LRS rarely justified in dev/qa. Reports and tags for review —
+# does NOT auto-downgrade (requires detach/reattach, not a one-shot action).
+
+policies:
+  - name: report-premium-disks-nonprod
+    resource: azure.disk
+    description: Premium SSDs attached to non-prod VMs — candidate downgrade
+    filters:
+      - type: value
+        key: "sku.name"
+        value: "Premium_LRS"
+      - "tag:env":
+          op: in
+          value: ["dev", "qa", "test", "staging"]
+    actions:
+      - type: tag
+        tag: finops:premium-nonprod-review
+        value: "{now}"

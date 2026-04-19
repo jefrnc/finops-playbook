@@ -1,0 +1,12 @@
+# Cloud Custodian — delete public IPs not associated with any resource
+
+policies:
+  - name: delete-orphan-public-ips
+    resource: azure.publicip
+    description: Public IPs with no ipConfiguration = billable but unused
+    filters:
+      - type: value
+        key: "properties.ipConfiguration"
+        value: null
+    actions:
+      - type: delete

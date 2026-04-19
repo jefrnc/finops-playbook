@@ -1,0 +1,12 @@
+# Cloud Custodian — delete App Service Plans with zero sites
+
+policies:
+  - name: delete-empty-app-service-plans
+    resource: azure.appserviceplan
+    description: ASPs with no hosted sites — paying for nothing
+    filters:
+      - type: value
+        key: "properties.numberOfSites"
+        value: 0
+    actions:
+      - type: delete

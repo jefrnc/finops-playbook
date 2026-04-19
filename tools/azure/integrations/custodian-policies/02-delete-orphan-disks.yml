@@ -1,0 +1,32 @@
+# Cloud Custodian — find managed disks unattached for >14 days and delete
+#
+# Runs in 2 stages: first a report-only policy, then destroy after cooldown.
+# NEVER run the destroy policy without the cooldown filter.
+
+policies:
+  - name: report-orphan-disks
+    resource: azure.disk
+    description: Managed disks without managedBy (not attached to any VM)
+    filters:
+      - type: value
+        key: "managedBy"
+        value: null
+    actions:
+      - type: tag
+        tag: finops:orphan-detected
+        value: "{now}"
+
+  - name: delete-orphan-disks-after-14d
+    resource: azure.disk
+    description: Delete orphan disks tagged 14+ days ago (safety cooldown)
+    filters:
+      - type: value
+        key: "managedBy"
+        value: null
+      - "tag:finops:orphan-detected": present
+      - type: marked-for-op
+        tag: finops:orphan-detected
+        op: delete
+        skew: 14
+    actions:
+      - type: delete
