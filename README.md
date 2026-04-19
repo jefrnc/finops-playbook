@@ -130,6 +130,22 @@ Tagging Strategy:
 
 ## 🛠️ Tools & Resources
 
+### Bundled toolkit — [`tools/`](./tools)
+
+A set of bash utilities that turn the Azure CLI + Cost Management API +
+Resource Graph into weekly/monthly FinOps reports. All read-only, no SaaS
+required.
+
+| Script | Purpose |
+|---|---|
+| `finops-drift-weekly.sh` | Inventory drift vs. baseline |
+| `finops-waste-hunter.sh` | Orphan disks, NICs, public IPs, old snapshots, empty ASPs |
+| `finops-tag-compliance.sh` | Tag coverage scoring + backfill plan |
+| `finops-cost-by-tag.sh` | Cost Management breakdown grouped by tag |
+| `finops-monthly-report.sh` | Orchestrator — consolidated monthly report |
+
+See [`tools/README.md`](./tools/README.md) for usage.
+
 ### Cloud Provider Tools
 - **AWS**: Cost Explorer, Trusted Advisor, Compute Optimizer
 - **Azure**: Cost Management, Advisor

@@ -1,0 +1,7 @@
+# generated runtime artifacts (CSV / markdown / JSON / baselines)
+output/*
+!output/.gitkeep
+
+# local per-environment profiles — never commit client data
+config/*.env
+!config/example.env
