@@ -130,6 +130,22 @@ Tagging Strategy:
 
 ## 🛠️ Tools & Resources
 
+### Bundled toolkit — [`tools/`](./tools)
+
+Runnable utilities that complement the playbook, organized by cloud provider.
+Each folder is self-contained (own `lib/`, `config/`, `output/`, README) so
+you can adopt one without pulling in the others.
+
+| Provider | Folder | What's inside |
+|---|---|---|
+| Azure | [`tools/azure/`](./tools/azure) | 5 bash scripts: inventory drift, waste hunter, tag compliance, cost-by-tag, monthly orchestrator |
+| AWS | `tools/aws/` | _(not yet — contributions welcome)_ |
+| GCP | `tools/gcp/` | _(not yet — contributions welcome)_ |
+
+All scripts are read-only by design: they query the cloud and write CSV +
+Markdown locally. No mutations, no SaaS, no vendor lock-in. See
+[`tools/README.md`](./tools/README.md) for the contributing guide.
+
 ### Cloud Provider Tools
 - **AWS**: Cost Explorer, Trusted Advisor, Compute Optimizer
 - **Azure**: Cost Management, Advisor
