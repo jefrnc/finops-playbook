@@ -206,3 +206,12 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 **Last Updated**: September 2025  
 **Maintained by**: [@jefrnc](https://github.com/jefrnc)
+
+---
+
+## Support this project
+
+Free, and maintained on my own time. If it saved you a weekend of work, you can
+[sponsor me on GitHub](https://github.com/sponsors/jefrnc).
+
+[![Sponsor](https://img.shields.io/badge/Sponsor-jefrnc-EA4AAA?logo=githubsponsors&logoColor=white)](https://github.com/sponsors/jefrnc)
